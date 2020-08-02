@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://dheera:Aluminium13@communityplatformv1.9iviv.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://dheera:Aluminium13@communityplatformv1.9iviv.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
 }
