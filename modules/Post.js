@@ -5,9 +5,9 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  profile: {
+  community: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "profile",
+    ref: "community",
   },
   topic: {
     type: String,

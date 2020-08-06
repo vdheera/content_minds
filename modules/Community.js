@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
+const CommunitySchema = new mongoose.Schema({
   name: {
-    type: String,
-    required: true,
-  },
-  email: {
     type: String,
     required: true,
     unique: true,
   },
-  password: {
+  description: {
     type: String,
     required: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
   },
   date: {
     type: Date,
@@ -20,4 +20,4 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model("user", UserSchema);
+module.exports = Community = mongoose.model("community", CommunitySchema);

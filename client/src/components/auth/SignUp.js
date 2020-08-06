@@ -1,17 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React from "react";
+import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
-const Register = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-  });
-
-  const { name, email, password, password2 } = formData;
+const SignUp = () => {
   return (
     <Fragment>
-      {" "}
       <h1 className='large text-primary'>Sign Up</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Create Your Account
@@ -28,7 +21,7 @@ const Register = () => {
             type='password'
             placeholder='Password'
             name='password'
-            minlength='6'
+            minlength='8'
           />
         </div>
         <div className='form-group'>
@@ -36,15 +29,16 @@ const Register = () => {
             type='password'
             placeholder='Confirm Password'
             name='password2'
-            minlength='6'
+            minlength='8'
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
       <p className='my-1'>
-        Already have an account? <a href='login.html'>Sign In</a>
+        Already have an account? <Link to='/login'>Sign In</Link>
       </p>
     </Fragment>
   );
 };
-export default Register;
+
+export default SignUp;
