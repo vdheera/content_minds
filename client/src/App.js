@@ -4,6 +4,7 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
+import Posts from "./components/layout/Posts";
 import Communities from "./components/layout/Communities";
 
 import "./App.css";
@@ -20,6 +21,7 @@ class App extends Component {
               <Route exact path='/register' component={SignUp} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/communities' component={Communities} />
+              <Route exact path='/posts' component={Posts} />
             </Switch>
           </section>
         </Fragment>

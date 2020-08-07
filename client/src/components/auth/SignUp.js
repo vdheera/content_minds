@@ -22,7 +22,7 @@ class SignUp extends Component {
               type='password'
               placeholder='Password'
               name='password'
-              minlength='8'
+              minLength='8'
             />
           </div>
           <div className='form-group'>
@@ -30,7 +30,7 @@ class SignUp extends Component {
               type='password'
               placeholder='Confirm Password'
               name='password2'
-              minlength='8'
+              minLength='8'
             />
           </div>
           <input type='submit' className='btn btn-primary' value='Register' />
