@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const auth = require("../../middleware/auth");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
 const User = require("../../modules/User");
+const Post = require("../../modules/Post");
 
-// @route POST api/users
+// @route POST /users
 //@desc Register User
 //@access Public
 router.post(
@@ -35,15 +36,9 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "User already exists" }] });
       }
-      const avatar = gravatar.url(email, {
-        s: "200",
-        r: "pg",
-        d: "mm",
-      });
       user = new User({
         name,
         email,
-        avatar,
         password,
       });
       const salt = await bcrypt.genSalt(10);
@@ -71,7 +66,7 @@ router.post(
   }
 );
 
-// @route GET api/users
+// @route GET /users
 //@desc Get all users
 //@access Public
 router.get("/", async (req, res) => {
@@ -81,6 +76,51 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
+  }
+});
+
+// @route GET /users/:userid
+//@desc Get a specific users's profile (including user info, posts, likes and comments)
+//@access Private
+
+//in the future, need to only get posts from a specific community, not
+router.get("/:userid", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userid);
+    const createdPosts = await Post.find({ user: req.params.userid });
+    const likedPosts = await Post.find({ likes: { user: req.params.userid } });
+    const commentedPosts = await Post.find({
+      comments: { user: req.params.userid },
+    });
+    res.json({
+      user: user,
+      posts: createdPosts,
+      liked: likedPosts,
+      comments: commentedPosts,
+    });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.status(500).send("Server error");
+  }
+});
+
+// @route delete /users/:userid
+//@desc Delete a specific user and their account
+//@access Public
+router.delete("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(401).json({ msg: "User not found" });
+    }
+    await user.remove();
+    return res.json({ msg: "Successfully deleted your account" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 });
 

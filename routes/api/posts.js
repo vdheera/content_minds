@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const User = require("../../modules/User");
-const Profile = require("../../modules/Profile");
 const Post = require("../../modules/Post");
+const Community = require("../../modules/Community");
 const { check, validationResult } = require("express-validator");
 
-// @route POST /posts
-//@desc Create a post
+// @route POST /posts/:communityid
+//@desc Create a post to a specific community
 //@access Private
 router.post(
-  "/",
+  "/:communityid",
   [
     auth,
     [
@@ -25,12 +25,12 @@ router.post(
     }
     try {
       const user = await User.findById(req.user.id).select("-password");
-      const profile = await Profile.findOne({ user: req.user.id });
+      const community = await Community.findById(req.params.communityid);
       const newPost = new Post({
         topic: req.body.topic,
         body: req.body.body,
         user: user,
-        profile: profile,
+        community: community,
       });
       const post = newPost.save();
       res.json(newPost);
@@ -41,26 +41,11 @@ router.post(
   }
 );
 
-// @route GET /posts
-//@desc Get all posts
-//@access Public
-router.get("/", async (req, res) => {
-  try {
-    //gets all dates by newest firt
-    const posts = await Post.find().sort({ date: -1 });
-    res.json(posts);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
 // @route GET /posts/:id
 //@desc Get a specific post based by ID
 //@access Public
 router.get("/:id", async (req, res) => {
   try {
-    //gets all dates by newest firt
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ msg: "Post not found" });
@@ -172,14 +157,12 @@ router.post(
     }
     try {
       const user = await User.findById(req.user.id).select("-password");
-      const profile = await Profile.findOne({ user: req.user.id });
       const post = await Post.findById(req.params.id);
       if (!post) {
         return res.status(404).json({ msg: "Post not found" });
       }
       const newComment = {
         text: req.body.text,
-        profile: profile,
         user: user,
       };
       post.comments.unshift(newComment);

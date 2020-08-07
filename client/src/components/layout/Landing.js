@@ -1,25 +1,27 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-const Landing = () => {
-  return (
-    <section className='landing'>
-      <div className='dark-overlay'>
-        <div className='landing-inner'>
-          <h1 className='x-large'>Hiatus</h1>
-          <p className='lead'>Build your own tight-knit community!</p>
-          <div className='buttons'>
-            <Link to='/register' className='btn btn-primary'>
-              Sign Up
-            </Link>
-            <Link to='/login' className='btn btn-light'>
-              Login
-            </Link>
+class Landing extends Component {
+  render() {
+    return (
+      <section className='landing'>
+        <div className='dark-overlay'>
+          <div className='landing-inner'>
+            <h1 className='x-large'>Hiatus</h1>
+            <p className='lead'>Build your own tight-knit community!</p>
+            <div className='buttons'>
+              <Link to='/register' className='btn btn-primary'>
+                Sign Up
+              </Link>
+              <Link to='/login' className='btn btn-light'>
+                Login
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  }
+}
 
 export default Landing;

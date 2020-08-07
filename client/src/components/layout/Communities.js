@@ -1,19 +1,16 @@
-import React from "react";
-import axios from 'axios'; 
+import React, { Component } from "react";
+import axios from "axios";
 
-const Communities = () => {
-    function getallposts() { 
-        axios.get('./posts')
-    }
-  return (
-    <div onLoad="getallposts()">
-      <h1 class='large text-primary'>Communities</h1>
-      <p class='lead'>Join a community</p>
-      <div>
-
+class Communities extends Component {
+  render() {
+    return (
+      <div onLoad='getallposts()'>
+        <h1 class='large text-primary'>Communities</h1>
+        <p class='lead'>Join a community</p>
+        <div></div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Communities;
