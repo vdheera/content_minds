@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import IndividualPost from "./IndividualPost";
+
 class Posts extends Component {
   state = {
     posts: [],
@@ -8,19 +9,24 @@ class Posts extends Component {
   };
   async componentDidMount() {
     this.setState({ loading: true });
+    const commid = await this.props.location.id;
+    //console.log(typeof commid.id);
     const res = await axios.get(
-      "http://localhost:5000/communities/5f2c951f81383f0558b91102"
+      "http://localhost:5000/communities/" + `${commid}`
     );
 
     this.setState({ posts: res.data, loading: false });
   }
   render() {
     return (
-      <div style={postStyle}>
-        {this.state.posts.map((posts) => (
-          <IndividualPost key={posts._id} post={posts} />
-        ))}
-      </div>
+      <Fragment>
+        <button>Write a Post!</button>
+        <div style={postStyle}>
+          {this.state.posts.map((posts) => (
+            <IndividualPost key={posts._id} post={posts} />
+          ))}
+        </div>
+      </Fragment>
     );
   }
 }
