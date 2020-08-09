@@ -18,7 +18,7 @@ class App extends Component {
           <Navbar />
           <section className='container'>
             <Switch>
-              <Route exact path='/register' component={SignUp} />
+              <Route exact path='/signup' component={SignUp} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/communities' component={Communities} />
               <Route exact path='/posts' component={Posts} />
