@@ -1,127 +1,100 @@
-import React, { Component } from "react";
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React from "react";
+import { Fragment, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { register } from "../../actions/auth";
+import { setAlert } from "../../actions/alert";
+import PropTypes from "prop-types";
 
-class SignUp extends Component {
-  state = {
-    token: "",
+const SignUp = ({ register, setAlert, isAuthenticated }) => {
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     password2: "",
-  };
-  onChangeName = (e) => {
-    // this.setState({ [e.target.name]: e.target.value });
-    //console.log(this.state.name);
-    this.setState({ name: e.target.value });
-    console.log(this.state.name);
-  };
-  onChangeEmail = (e) => {
-    // this.setState({ [e.target.name]: e.target.value });
-    //console.log(this.state.name);
-    this.setState({ email: e.target.value });
-    console.log(this.state.email);
-  };
-  onChangeP1 = (e) => {
-    // this.setState({ [e.target.name]: e.target.value });
-    //console.log(this.state.name);
-    this.setState({ password: e.target.value });
-    console.log(this.state.password);
-  };
-  onChangeP2 = (e) => {
-    // this.setState({ [e.target.name]: e.target.value });
-    //console.log(this.state.name);
-    this.setState({ password2: e.target.value });
-    console.log(this.state.password2);
-  };
-  async onSubmit() {
-    console.log(this.state.name);
-    console.log("hit register properly");
+  });
 
-    //e.preventDefault();
-    if (this.state.password !== this.state.password2) {
-      console.log("Passwords do not match");
+  const { name, email, password, password2 } = formData;
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== password2) {
+      setAlert("Passwords do not match", "danger");
     } else {
-      const newUser = {
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-      };
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      console.log("hi");
-      const body = JSON.stringify(newUser);
-      const res = await axios.post("http://localhost:5000/users", body, config);
-      console.log(res.data);
-
-      this.setState({ token: res.data });
+      register({ name, email, password });
     }
-  }
-  render() {
-    return (
-      <Fragment>
-        <h1 className='large text-primary'>Sign Up</h1>
-        <p className='lead'>
-          <i className='fas fa-user'></i> Create Your Account
-        </p>
-        <form className='form'>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Name'
-              name='name'
-              value={this.name}
-              onChange={(e) => this.onChangeName(e)}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='email'
-              placeholder='Email Address'
-              name='email'
-              value={this.email}
-              onChange={(e) => this.onChangeEmail(e)}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              placeholder='Password'
-              name='password'
-              value={this.password}
-              onChange={(e) => this.onChangeP1(e)}
-              minLength='8'
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              placeholder='Confirm Password'
-              name='password2'
-              value={this.password2}
-              onChange={(e) => this.onChangeP2(e)}
-              minLength='8'
-            />
-          </div>
-          <input
-            type='submit'
-            className='btn btn-primary'
-            value='Register'
-            onSubmit={this.onSubmit}
-          />
-        </form>
-        <p className='my-1'>
-          Already have an account? <Link to='/login'>Sign In</Link>
-        </p>
-      </Fragment>
-    );
-  }
-}
+  };
 
-export default SignUp;
+  if (isAuthenticated) {
+    return <Redirect to='/communities' />;
+  }
+  return (
+    <Fragment>
+      <h1 className='large text-primary'>Sign Up</h1>
+      <p className='lead'>
+        <i className='fas fa-user'></i> Create Your Account
+      </p>
+      <form className='form' onSubmit={onSubmit}>
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Name'
+            name='name'
+            value={name}
+            onChange={onChange}
+            //required
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='email'
+            placeholder='Email Address'
+            name='email'
+            value={email}
+            onChange={onChange}
+            //required
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='password'
+            placeholder='Password'
+            name='password'
+            value={password}
+            onChange={onChange}
+            //minLength='8'
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='password'
+            placeholder='Confirm Password'
+            name='password2'
+            value={password2}
+            onChange={onChange}
+            //minLength='8'
+          />
+        </div>
+        <input type='submit' className='btn btn-primary' value='Register' />
+      </form>
+      <p className='my-1'>
+        Already have an account? <Link to='/login'>Sign In</Link>
+      </p>
+    </Fragment>
+  );
+};
+
+SignUp.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  //isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(SignUp);

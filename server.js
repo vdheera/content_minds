@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.get("/", (req, res) => res.send("API running"));
+//app.get("/", (req, res) => res.send("API running"));
 
 //Define Routes
 app.use("/users", require("./routes/api/users"));

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
 import IndividualPost from "./IndividualPost";
+import { Link } from "react-router-dom";
 
 class Posts extends Component {
   state = {
@@ -20,7 +21,7 @@ class Posts extends Component {
   render() {
     return (
       <Fragment>
-        <button>Write a Post!</button>
+        <Link to='/makepost'>Write a Post!</Link>
         <div style={postStyle}>
           {this.state.posts.map((posts) => (
             <IndividualPost key={posts._id} post={posts} />
