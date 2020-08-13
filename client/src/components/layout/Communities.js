@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import IndividualCommunity from "./IndividualCommunity";
+import Profiles from "../Profiles/Profiles";
 class Communities extends Component {
   state = {
     communities: [],
@@ -14,11 +16,16 @@ class Communities extends Component {
   }
   render() {
     return (
-      <div style={communityStyle}>
-        {this.state.communities.map((communities) => (
-          <IndividualCommunity key={communities._id} community={communities} />
-        ))}
-      </div>
+      <Fragment>
+        <div style={communityStyle}>
+          {this.state.communities.map((communities) => (
+            <IndividualCommunity
+              key={communities._id}
+              community={communities}
+            />
+          ))}
+        </div>
+      </Fragment>
     );
   }
 }

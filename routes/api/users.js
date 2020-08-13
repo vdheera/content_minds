@@ -84,6 +84,29 @@ router.get("/", async (req, res) => {
 //@access Private
 
 //in the future, need to only get posts from a specific community, not
+router.get("/me", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const createdPosts = await Post.find({ user: req.user.id });
+    const likedPosts = await Post.find({ likes: { user: req.user.id } });
+    const commentedPosts = await Post.find({
+      comments: { user: req.user.id },
+    });
+    res.json({
+      user: user,
+      posts: createdPosts,
+      liked: likedPosts,
+      comments: commentedPosts,
+    });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.status(500).send("Server error");
+  }
+});
+//in the future, need to only get posts from a specific community, not
 router.get("/:userid", auth, async (req, res) => {
   try {
     const user = await User.findById(req.params.userid);

@@ -6,15 +6,14 @@ class IndividualCommunity extends Component {
     return (
       <div>
         <div className='profile-top bg-primary p-2'>
+          <Link to='/users' style={{ color: "black" }}>
+            View Community Members
+          </Link>
           <h1 className='large'>{this.props.community.name}</h1>
           <p className='lead'>{this.props.community.description}</p>
           <Link
             style={{ color: "black" }}
-            to={{
-              pathname: "/posts",
-              id: this.props.community._id,
-              postProps: { id: this.props.community._id },
-            }}
+            to={`/communities/${this.props.community._id}`}
           >
             Enter {this.props.community.name}
           </Link>

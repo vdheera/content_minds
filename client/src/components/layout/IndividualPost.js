@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import Moment from "react-moment";
 class IndividualPost extends Component {
   render() {
     return (
