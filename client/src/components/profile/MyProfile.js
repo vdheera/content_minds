@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
+import PostItem from "../layout/PostItem";
 
 const MyProfile = ({
   getCurrentProfile,
@@ -20,7 +21,26 @@ const MyProfile = ({
       <h1 className='large text-primary'>Profile</h1>
       <p className='lead'>Welcome {user && user.name}</p>
       {profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <h1>Posts {profile.user.name} has commented on</h1>
+          <div>
+            {profile.comments.map((posts) => (
+              <PostItem key={posts._id} post={posts} />
+            ))}
+          </div>
+          <h1>Posts {profile.user.name} has liked</h1>
+          <div>
+            {profile.liked.map((posts) => (
+              <PostItem key={posts._id} post={posts} />
+            ))}
+          </div>
+          <h1>Posts {profile.user.name} has made</h1>
+          <div>
+            {profile.posts.map((posts) => (
+              <PostItem key={posts._id} post={posts} />
+            ))}
+          </div>
+        </Fragment>
       ) : (
         <Fragment>
           You haven't posted, liked or commented on any post.

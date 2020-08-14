@@ -14,6 +14,7 @@ class IndividualCommunity extends Component {
           <Link
             style={{ color: "black" }}
             to={`/communities/${this.props.community._id}`}
+            state={{ id: this.props.community._id }}
           >
             Enter {this.props.community.name}
           </Link>
