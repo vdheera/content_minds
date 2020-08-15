@@ -46,7 +46,9 @@ router.post(
 //@access Public
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate("user");
+    console.log(post);
+    //const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ msg: "Post not found" });
     }
@@ -57,7 +59,7 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ msg: "Post not found" });
     }
 
-    res.status(500).send("Server Error");
+    res.status(500).send(err.message);
   }
 });
 

@@ -87,9 +87,12 @@ router.delete("/:communityid", auth, async (req, res) => {
 //@access Public
 router.get("/:communityid", async (req, res) => {
   try {
-    const posts = await Post.find({ community: req.params.communityid }).sort({
-      date: -1,
-    });
+    const posts = await Post.find({ community: req.params.communityid })
+      .sort({
+        date: -1,
+      })
+      .populate("user");
+    console.log(posts);
     if (!posts) {
       return res.status(404).json({ msg: "Community not found" });
     }

@@ -22,7 +22,7 @@ const PostItem = ({
         {auth.isAuthenticated && !auth.loading && (
           <div>
             <div>
-              <h4>{user}</h4>
+              <h4>{user.name}</h4>
             </div>
           </div>
         )}
