@@ -16,8 +16,8 @@ body {
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #dbebd3;
-  color: #333;
+  background-color: rgb(161, 131, 161);
+  color: grey;
 }
 
 a {
@@ -332,14 +332,14 @@ button {
 /* Landing Page */
 .landing {
   position: relative;
-  background-color: #dbebd3;
+  background-color: white;
   /*background: url('../img/showcase.jpg') no-repeat center center/cover;*/
 
   height: 100vh;
 }
 
 .landing-inner {
-  color: #dbebd3;
+  color: white;
   height: 100%;
   width: 80%;
   margin: auto;

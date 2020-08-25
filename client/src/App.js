@@ -17,6 +17,8 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import IndividualPost from "./components/layout/IndividualPost";
 import "./App.css";
+import "./css/main.css";
+import "./css/util.css";
 
 //Redux
 import { Provider } from "react-redux";

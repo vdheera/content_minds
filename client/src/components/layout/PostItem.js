@@ -18,31 +18,32 @@ const PostItem = ({
 }) => {
   return (
     <Fragment>
-      <div className='post bg-white p-1 my-1'>
+      <div class='card' style={{ width: "20rem" }}>
         {auth.isAuthenticated && !auth.loading && (
-          <div>
-            <div>
-              <h4>{user.name}</h4>
-            </div>
-          </div>
+          <h4 class='card-header'>{user.name}</h4>
         )}
-        <div>
+        <div class='card-body'>
           <Link to={`/posts/${_id}`}>
-            <h4>{topic}</h4>
+            <h4 class='card-title' style={{ color: "black" }}>
+              {topic}
+            </h4>
           </Link>
-        </div>
-        <div>
-          <p className='my-1'>{body}</p>
-          <div></div>
-          <p className='post-date'>
+          <p className='post-date' class='card-subtitle'>
             Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
           </p>
+          <p class='card-text'>{body}</p>
 
-          {comments.map((comment) => (
-            <CommentItem key={comment._id} comment={comment} postID={_id} />
-          ))}
-
+          <ul class='list-group list-group-flush'>
+            {comments.map((comment) => (
+              <li class='list-group-item'>
+                <CommentItem key={comment._id} comment={comment} postID={_id} />
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class='card-body'>
           <button
+            class='card-link'
             onClick={(e) => addLike(_id)}
             type='button'
             className='btn btn-light'
@@ -51,22 +52,25 @@ const PostItem = ({
             <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
           </button>
           <button
+            class='card-link'
             onClick={(e) => removeLike(_id)}
             type='button'
             className='btn btn-light'
           >
             <i className='fas fa-thumbs-down' />
           </button>
+
+          {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
+            <button
+              class='card-link'
+              onClick={(e) => deletePost(_id)}
+              type='button'
+              className='btn btn-danger'
+            >
+              <i className='fas fa-times' />
+            </button>
+          )}
         </div>
-        {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
-          <button
-            onClick={(e) => deletePost(_id)}
-            type='button'
-            className='btn btn-danger'
-          >
-            <i className='fas fa-times' />
-          </button>
-        )}
       </div>
     </Fragment>
   );
