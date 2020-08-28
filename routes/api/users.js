@@ -91,10 +91,10 @@ router.get("/me", auth, async (req, res) => {
       "user"
     );
     const likedPosts = await Post.find({
-      likes: { user: req.user.id },
+      "likes.user": req.user.id,
     }).populate("user");
     const commentedPosts = await Post.find({
-      comments: { user: req.user.id },
+      "comments.user": req.user.id,
     }).populate("user");
     res.json({
       user: user,
@@ -118,10 +118,10 @@ router.get("/:userid", auth, async (req, res) => {
       "user"
     );
     const likedPosts = await Post.find({
-      likes: { user: req.params.userid },
+      "likes.user": req.params.userid,
     }).populate("user");
     const commentedPosts = await Post.find({
-      comments: { user: req.params.userid },
+      "comments.user": req.params.userid,
     });
     res.json({
       user: user,
