@@ -12,65 +12,73 @@ const PostItem = ({
   addLike,
   removeLike,
   deletePost,
-  getPostUser,
   auth,
   post: { _id, topic, body, user, likes, comments, date },
 }) => {
   return (
     <Fragment>
-      <div class='card' style={{ width: "20rem" }}>
+      <div style={{ width: "20rem" }}>
         {auth.isAuthenticated && !auth.loading && (
-          <h4 class='card-header'>{user.name}</h4>
+          <Link to={`/users/${user._id}`} class='card-header'>
+            {user.name}
+          </Link>
         )}
         <div class='card-body'>
-          <Link to={`/posts/${_id}`}>
-            <h4 class='card-title' style={{ color: "black" }}>
-              {topic}
-            </h4>
-          </Link>
+          <h4 class='card-title' style={{ color: "black" }}>
+            {topic}
+          </h4>
+
           <p className='post-date' class='card-subtitle'>
             Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
           </p>
           <p class='card-text'>{body}</p>
-
-          <ul class='list-group list-group-flush'>
+        </div>
+        {auth.isAuthenticated && !auth.loading && (
+          <div class='card-body'>
+            {user._id !== auth.user._id && (
+              <button
+                class='card-link'
+                onClick={(e) => addLike(_id)}
+                type='button'
+                className='btn btn-light'
+              >
+                <i className='fas fa-thumbs-up' />{" "}
+                <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
+              </button>
+            )}
+            {user._id !== auth.user._id && (
+              <button
+                class='card-link'
+                onClick={(e) => removeLike(_id)}
+                type='button'
+                className='btn btn-light'
+              >
+                <i className='fas fa-thumbs-down' />
+              </button>
+            )}
+            {user._id === auth.user._id && (
+              <button
+                onClick={(e) => deletePost(_id)}
+                type='button'
+                className='btn btn-danger'
+              >
+                <i className='fas fa-times' />
+              </button>
+            )}
+          </div>
+        )}
+        {comments.length > 0 && (
+          <div class='card-footer'>
+            <h7 style={{ color: "black" }}>Comments</h7>
             {comments.map((comment) => (
               <li class='list-group-item'>
                 <CommentItem key={comment._id} comment={comment} postID={_id} />
               </li>
             ))}
-          </ul>
-        </div>
-        <div class='card-body'>
-          <button
-            class='card-link'
-            onClick={(e) => addLike(_id)}
-            type='button'
-            className='btn btn-light'
-          >
-            <i className='fas fa-thumbs-up' />{" "}
-            <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
-          </button>
-          <button
-            class='card-link'
-            onClick={(e) => removeLike(_id)}
-            type='button'
-            className='btn btn-light'
-          >
-            <i className='fas fa-thumbs-down' />
-          </button>
+          </div>
+        )}
 
-          {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
-            <button
-              class='card-link'
-              onClick={(e) => deletePost(_id)}
-              type='button'
-              className='btn btn-danger'
-            >
-              <i className='fas fa-times' />
-            </button>
-          )}
-        </div>
+        <br></br>
       </div>
     </Fragment>
   );

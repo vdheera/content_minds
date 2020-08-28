@@ -105,7 +105,7 @@ const SignUp = ({ register, setAlert, isAuthenticated }) => {
             <div class='text-center p-t-115'>
               <span class='txt1'>Already have an account? </span>
 
-              <Link class='txt2' to='/signup'>
+              <Link class='txt2' to='/login'>
                 Login
               </Link>
             </div>

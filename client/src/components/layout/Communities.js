@@ -17,13 +17,15 @@ class Communities extends Component {
   render() {
     return (
       <Fragment>
-        <div style={communityStyle}>
-          {this.state.communities.map((communities) => (
-            <IndividualCommunity
-              key={communities._id}
-              community={communities}
-            />
-          ))}
+        <div class='card-columns'>
+          <div style={communityStyle}>
+            {this.state.communities.map((communities) => (
+              <IndividualCommunity
+                key={communities._id}
+                community={communities}
+              />
+            ))}
+          </div>
         </div>
       </Fragment>
     );

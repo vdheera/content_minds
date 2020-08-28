@@ -4,10 +4,20 @@ import PropTypes from "prop-types";
 
 const ProfileItem = ({ profile: { _id, name, email } }) => {
   return (
-    <div className='profile bg-light'>
-      <h2>{name}</h2>
-      <h3>Email Address: {email}</h3>
-      <Link to={`/users/${_id}`}>View Profile</Link>
+    <div className='profile bg-light' class='card' style={{ width: "15rem" }}>
+      <div class='card-body'>
+        <h4 class='card-title' style={{ color: "black" }}>
+          {name}
+        </h4>
+        <p class='card-subtitle'>Email Address: {email}</p>
+        <Link
+          class='card-link'
+          to={`/users/${_id}`}
+          style={{ color: "rgb(161, 131, 161)" }}
+        >
+          View Profile
+        </Link>
+      </div>
     </div>
   );
 };

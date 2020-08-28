@@ -127,7 +127,7 @@ img {
 
 .btn {
   display: inline-block;
-  background: var(--light-color);
+  background: rgb(161, 131, 161);
   color: #333;
   padding: 0.4rem 1.3rem;
   font-size: 1rem;
@@ -159,8 +159,13 @@ img {
 .bg-primary,
 .badge-primary,
 .alert-primary {
-  background: var(--primary-color);
+  background: black;
   color: #fff;
+}
+
+.btn-black {
+  background: black;
+  color: white;
 }
 
 .btn-light,
@@ -204,8 +209,19 @@ img {
   border: #ccc solid 1px;
 }
 
+.card-columns {
+  display: inline-block;
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 5;
+  }
+}
+
 .btn:hover {
   opacity: 0.8;
+  color: white;
 }
 
 .bg-light,
@@ -225,7 +241,7 @@ img {
 
 /* Overlay */
 .dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgb(161, 131, 161);
   position: absolute;
   top: 0;
   left: 0;
@@ -303,11 +319,10 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 0.7rem 2rem;
-  position: fixed;
+  position: relative;
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
 }
 
@@ -322,7 +337,7 @@ button {
 }
 
 .navbar a:hover {
-  color: var(--primary-color);
+  color: black;
 }
 
 .navbar .welcome span {

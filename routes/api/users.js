@@ -87,11 +87,15 @@ router.get("/", async (req, res) => {
 router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const createdPosts = await Post.find({ user: req.user.id });
-    const likedPosts = await Post.find({ likes: { user: req.user.id } });
+    const createdPosts = await Post.find({ user: req.user.id }).populate(
+      "user"
+    );
+    const likedPosts = await Post.find({
+      likes: { user: req.user.id },
+    }).populate("user");
     const commentedPosts = await Post.find({
       comments: { user: req.user.id },
-    });
+    }).populate("user");
     res.json({
       user: user,
       posts: createdPosts,
@@ -109,9 +113,13 @@ router.get("/me", auth, async (req, res) => {
 //in the future, need to only get posts from a specific community, not
 router.get("/:userid", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.params.userid);
-    const createdPosts = await Post.find({ user: req.params.userid });
-    const likedPosts = await Post.find({ likes: { user: req.params.userid } });
+    const user = await User.findById(req.params.userid).populate("user");
+    const createdPosts = await Post.find({ user: req.params.userid }).populate(
+      "user"
+    );
+    const likedPosts = await Post.find({
+      likes: { user: req.params.userid },
+    }).populate("user");
     const commentedPosts = await Post.find({
       comments: { user: req.params.userid },
     });

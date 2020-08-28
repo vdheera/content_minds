@@ -9,6 +9,7 @@ import PostForm from "../layout/PostForm";
 import CommentForm from "../layout/CommentForm";
 import CommentItem from "../layout/CommentItem";
 import { post } from "request";
+import GridLayout from "react-grid-layout";
 
 const Post = ({
   isAuthenticated,
@@ -22,32 +23,35 @@ const Post = ({
   }, [getPosts]);
   return (
     <Fragment>
-      {isAuthenticated && (
-        //<Link to={`/posts/${match.params.id}`}>Write a Post!</Link>
-        <PostForm></PostForm>
+      {isAuthenticated && <PostForm></PostForm>}
+      {isAuthenticated && <h3 style={titleStyle}>Previous Posts</h3>}
+      <br></br>
 
-        /*<Link
-          to={{
-            pathname: `/posts/${match.params.id}`,
-            state: { id: match.params.id },
-          }}
-        >
-          Write a Post!
-        </Link>*/
-      )}
-
-      {posts.map((posts) => (
-        <div>
-          <PostItem key={posts._id} post={posts}></PostItem>
-          {isAuthenticated && (
-            <div>
-              <CommentForm postID={posts._id}></CommentForm>
-            </div>
-          )}
-        </div>
-      ))}
+      <div class='card-columns'>
+        {posts.map((posts) => (
+          <div class='card' style={cardStyle}>
+            <PostItem key={posts._id} post={posts}></PostItem>
+            {isAuthenticated && (
+              <div>
+                <CommentForm postID={posts._id}></CommentForm>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </Fragment>
   );
+};
+
+const titleStyle = {
+  color: "black",
+  textAlign: "center",
+};
+
+const cardStyle = {
+  width: "20rem",
+  borderColor: "black",
+  borderWidth: "2px",
 };
 
 Post.propTypes = {
