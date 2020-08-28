@@ -24,9 +24,19 @@ const Post = ({
   return (
     <Fragment>
       {isAuthenticated && <PostForm></PostForm>}
-      {isAuthenticated && <h3 style={titleStyle}>Previous Posts</h3>}
-      <br></br>
+      {isAuthenticated && (
+        <Fragment>
+          <h3 style={titleStyle}>Previous Posts</h3>
+          <br></br>
+        </Fragment>
+      )}
 
+      {!isAuthenticated && (
+        <Fragment>
+          <h3 style={titleStyle}>Posts</h3>
+          <br></br>
+        </Fragment>
+      )}
       <div class='card-columns'>
         {posts.map((posts) => (
           <div class='card' style={cardStyle}>

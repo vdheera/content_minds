@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { register } from "../../actions/auth";
 import { setAlert } from "../../actions/alert";
 import PropTypes from "prop-types";
+import { set } from "mongoose";
 
 const SignUp = ({ register, setAlert, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -12,16 +13,20 @@ const SignUp = ({ register, setAlert, isAuthenticated }) => {
     email: "",
     password: "",
     password2: "",
+    invitecode: "",
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, password2, invitecode } = formData;
+  const invitecodes = ["PASSION", "CREATIVITY", "EPICVAPPLE", "10x"];
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) {
+    if (invitecodes.indexOf(invitecode) === -1) {
+      setAlert("Please enter a valid invite code", "danger");
+    } else if (password !== password2) {
       setAlert("Passwords do not match", "danger");
     } else {
       register({ name, email, password });
@@ -93,6 +98,18 @@ const SignUp = ({ register, setAlert, isAuthenticated }) => {
               />
               <i class='zmdi zmdi-eye'></i>
               <span class='focus-input100'></span>
+            </div>
+
+            <div class='wrap-input100 validate-input'>
+              <input
+                type='invitecode'
+                class='input100'
+                placeholder='Enter your invite code'
+                name='invitecode'
+                value={invitecode}
+                onChange={onChange}
+                required
+              />
             </div>
 
             <div class='container-login100-form-btn'>
