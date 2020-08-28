@@ -47,14 +47,10 @@ const App = () => {
               <Route exact path='/users' component={Profiles} />
               <PrivateRoute exact path='/users/:id' component={Profile} />
               <Route exact path='/communities/:id' component={Post} />
-              <Route exact path='/post/:id' component={PostForm} />
+              <Route exact path='/posts/:id' component={PostForm} />
               <Route exact path='/communities' component={Communities} />
               <PrivateRoute exact path='/me' component={MyProfile} />
-              <PrivateRoute
-                exact
-                path='/posts/:id'
-                component={IndividualPost}
-              />
+              <Route exact path='/post/:id' component={IndividualPost} />
               <Route exact path='/makepost' component={WritePost} />
             </Switch>
           </section>

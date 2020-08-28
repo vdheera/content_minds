@@ -7,9 +7,6 @@ import IndividualPost from "../layout/IndividualPost";
 import PostItem from "../layout/PostItem";
 import PostForm from "../layout/PostForm";
 import CommentForm from "../layout/CommentForm";
-import CommentItem from "../layout/CommentItem";
-import { post } from "request";
-import GridLayout from "react-grid-layout";
 
 const Post = ({
   isAuthenticated,

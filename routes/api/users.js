@@ -122,7 +122,7 @@ router.get("/:userid", auth, async (req, res) => {
     }).populate("user");
     const commentedPosts = await Post.find({
       "comments.user": req.params.userid,
-    });
+    }).populate("user");
     res.json({
       user: user,
       posts: createdPosts,

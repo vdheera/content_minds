@@ -1,34 +1,59 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import Moment from "react-moment";
 import { connect } from "react-redux";
 import { getPost } from "../../actions/post";
-import { getPostUser } from "../../actions/post";
+import { addLike, removeLike, deletePost } from "../../actions/post";
+import PostItem from "./PostItem";
+import axios from "axios";
+import CommentItem from "./CommentItem";
+import CommentForm from "./CommentForm";
 
 const IndividualPost = ({
+  addLike,
+  removeLike,
   getPost,
-  getPostUser,
-  post: { post, loading },
-  match,
+  deletePost,
   auth,
+  match,
+  post: { post, loading },
 }) => {
   useEffect(() => {
     getPost(match.params.id);
   }, [getPost]);
-  return <div>post</div>;
+  return loading || post === null ? (
+    <h3>Loading</h3>
+  ) : (
+    <Fragment>
+      <div class='card'>
+        <PostItem post={post} showActions={true} />
+        {auth.isAuthenticated && (
+          <div>
+            <CommentForm postID={post._id}></CommentForm>
+          </div>
+        )}
+      </div>
+    </Fragment>
+  );
 };
 
 IndividualPost.propTypes = {
-  getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  getPostUser: PropTypes.func.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
-  auth: state.post,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getPost, getPostUser })(
-  IndividualPost
-);
+export default connect(mapStateToProps, {
+  addLike,
+  removeLike,
+  deletePost,
+  getPost,
+})(IndividualPost);

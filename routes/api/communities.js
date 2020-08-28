@@ -92,7 +92,6 @@ router.get("/:communityid", async (req, res) => {
         date: -1,
       })
       .populate("user comments.user");
-    console.log(posts);
     if (!posts) {
       return res.status(404).json({ msg: "Community not found" });
     }
