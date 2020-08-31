@@ -7,8 +7,6 @@ import IndividualPost from "../layout/IndividualPost";
 import PostItem from "../layout/PostItem";
 import PostForm from "../layout/PostForm";
 import CommentForm from "../layout/CommentForm";
-import CommentItem from "../layout/CommentItem";
-import { post } from "request";
 
 const Post = ({
   isAuthenticated,
@@ -22,32 +20,45 @@ const Post = ({
   }, [getPosts]);
   return (
     <Fragment>
+      {isAuthenticated && <PostForm></PostForm>}
       {isAuthenticated && (
-        //<Link to={`/posts/${match.params.id}`}>Write a Post!</Link>
-        <PostForm></PostForm>
-
-        /*<Link
-          to={{
-            pathname: `/posts/${match.params.id}`,
-            state: { id: match.params.id },
-          }}
-        >
-          Write a Post!
-        </Link>*/
+        <Fragment>
+          <h3 style={titleStyle}>Previous Posts</h3>
+          <br></br>
+        </Fragment>
       )}
 
-      {posts.map((posts) => (
-        <div>
-          <PostItem key={posts._id} post={posts}></PostItem>
-          {isAuthenticated && (
-            <div>
-              <CommentForm postID={posts._id}></CommentForm>
-            </div>
-          )}
-        </div>
-      ))}
+      {!isAuthenticated && (
+        <Fragment>
+          <h3 style={titleStyle}>Posts</h3>
+          <br></br>
+        </Fragment>
+      )}
+      <div class='card-columns'>
+        {posts.map((posts) => (
+          <div class='card' style={cardStyle}>
+            <PostItem key={posts._id} post={posts}></PostItem>
+            {isAuthenticated && (
+              <div>
+                <CommentForm postID={posts._id}></CommentForm>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </Fragment>
   );
+};
+
+const titleStyle = {
+  color: "black",
+  textAlign: "center",
+};
+
+const cardStyle = {
+  width: "20rem",
+  borderColor: "black",
+  borderWidth: "2px",
 };
 
 Post.propTypes = {

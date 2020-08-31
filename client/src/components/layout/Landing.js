@@ -12,9 +12,11 @@ const Landing = ({ isAuthenticated }) => {
       <div className='dark-overlay'>
         <div className='landing-inner'>
           <h1 className='x-large'>Hiatus</h1>
-          <p className='lead'>Build your own tight-knit community!</p>
+          <p className='lead' style={{ color: "black" }}>
+            Build your own tight-knit community!
+          </p>
           <div className='buttons'>
-            <Link to='/register' className='btn btn-primary'>
+            <Link to='/signup' className='btn btn-black'>
               Sign Up
             </Link>
             <Link to='/login' className='btn btn-light'>

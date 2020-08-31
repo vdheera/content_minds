@@ -23,7 +23,7 @@ const PostForm = ({ addPost }) => {
   return (
     <div className='post-form'>
       <div clas='bg-primary p'>
-        <h3>Say Something!</h3>
+        <h3 style={{ color: "white" }}>Say Something!</h3>
       </div>
       <form className='form my-1' onSubmit={onSubmit}>
         <textarea

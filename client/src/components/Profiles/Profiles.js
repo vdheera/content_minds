@@ -12,19 +12,21 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   return (
     <Fragment>
       {loading ? (
-        <h1>Loading</h1>
+        <h1 style={h3Style}>Loading</h1>
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Members</h1>
+          <h1 style={titleStyle}>Community Members</h1>
           <p className='lead'></p>
-          <div className='profiles'>
-            {profiles.length > 0 ? (
-              profiles.map((profile) => (
-                <ProfileItem key={profile._id} profile={profile} />
-              ))
-            ) : (
-              <h1>no members in this community!</h1>
-            )}
+          <div class='card-columns'>
+            <div className='profiles'>
+              {profiles.length > 0 ? (
+                profiles.map((profile) => (
+                  <ProfileItem key={profile._id} profile={profile} />
+                ))
+              ) : (
+                <h3 style={h3Style}>no members found</h3>
+              )}
+            </div>
           </div>
         </Fragment>
       )}
@@ -32,6 +34,14 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   );
 };
 
+const titleStyle = {
+  color: "white",
+  textAlign: "center",
+};
+const h3Style = {
+  color: "black",
+  textAlign: "center",
+};
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,

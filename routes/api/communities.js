@@ -91,8 +91,7 @@ router.get("/:communityid", async (req, res) => {
       .sort({
         date: -1,
       })
-      .populate("user");
-    console.log(posts);
+      .populate("user comments.user");
     if (!posts) {
       return res.status(404).json({ msg: "Community not found" });
     }

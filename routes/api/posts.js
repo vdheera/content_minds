@@ -46,7 +46,9 @@ router.post(
 //@access Public
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id).populate("user");
+    const post = await Post.findById(req.params.id).populate(
+      "user comments.user"
+    );
     console.log(post);
     //const post = await Post.findById(req.params.id);
     if (!post) {

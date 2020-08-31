@@ -12,28 +12,29 @@ const CommentItem = ({
   deleteComment,
 }) => {
   return (
-    <div class='post bg-white p-1 my-1'>
-      <div>
-        <Link to={`/profile/${user}`}>
-          <h4>{user}</h4>
+    <Fragment>
+      <h6 style={{ color: "black" }}>{text}</h6>
+      <h7 class='post-date'>
+        Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
+      </h7>
+      {auth.isAuthenticated && !auth.loading && (
+        <Link to={`/users/${user._id}`}>
+          <p class='card-text' style={{ color: "black" }}>
+            {user.name}
+          </p>
         </Link>
-      </div>
-      <div>
-        <p class='my-1'>{text}</p>
-        <p class='post-date'>
-          Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
-        </p>
-        {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
-          <button
-            onClick={() => deleteComment(postID, _id)}
-            type='button'
-            className='btn btn-danger'
-          >
-            <i className='fas fa-times' />
-          </button>
-        )}
-      </div>
-    </div>
+      )}
+
+      {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
+        <button
+          onClick={() => deleteComment(postID, _id)}
+          type='button'
+          className='btn btn-danger'
+        >
+          <i className='fas fa-times' />
+        </button>
+      )}
+    </Fragment>
   );
 };
 

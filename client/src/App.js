@@ -17,6 +17,8 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import IndividualPost from "./components/layout/IndividualPost";
 import "./App.css";
+import "./css/main.css";
+import "./css/util.css";
 
 //Redux
 import { Provider } from "react-redux";
@@ -34,8 +36,9 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Route exact path='/' component={Landing} />s
           <Navbar />
+          <Route exact path='/' component={Landing} />
+
           <section className='container'>
             <Alert />
             <Switch>
@@ -44,14 +47,10 @@ const App = () => {
               <Route exact path='/users' component={Profiles} />
               <PrivateRoute exact path='/users/:id' component={Profile} />
               <Route exact path='/communities/:id' component={Post} />
-              <Route exact path='/post/:id' component={PostForm} />
+              <Route exact path='/posts/:id' component={PostForm} />
               <Route exact path='/communities' component={Communities} />
               <PrivateRoute exact path='/me' component={MyProfile} />
-              <PrivateRoute
-                exact
-                path='/posts/:id'
-                component={IndividualPost}
-              />
+              <Route exact path='/post/:id' component={IndividualPost} />
               <Route exact path='/makepost' component={WritePost} />
             </Switch>
           </section>

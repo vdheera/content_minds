@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
 import PostItem from "../layout/PostItem";
+import CommentForm from "../layout/CommentForm";
 
 const MyProfile = ({
   getCurrentProfile,
@@ -18,26 +19,34 @@ const MyProfile = ({
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-primary'>Profile</h1>
-      <p className='lead'>Welcome {user && user.name}</p>
+      <h1 style={titleStyle}>Welcome {user && user.name}</h1>
       {profile !== null ? (
         <Fragment>
-          <h1>Posts {profile.user.name} has commented on</h1>
-          <div>
+          <h2 style={h3Style}>Posts you've commented on</h2>
+          <div class='card-columns'>
             {profile.comments.map((posts) => (
-              <PostItem key={posts._id} post={posts} />
+              <div class='card' style={{ width: "20rem" }}>
+                <PostItem key={posts._id} post={posts} />
+                <CommentForm postID={posts._id}></CommentForm>
+              </div>
             ))}
           </div>
-          <h1>Posts {profile.user.name} has liked</h1>
-          <div>
+          <h2 style={h3Style}>Posts you've liked</h2>
+          <div class='card-columns'>
             {profile.liked.map((posts) => (
-              <PostItem key={posts._id} post={posts} />
+              <div class='card' style={{ width: "20rem" }}>
+                <PostItem key={posts._id} post={posts} />
+                <CommentForm postID={posts._id}></CommentForm>
+              </div>
             ))}
           </div>
-          <h1>Posts {profile.user.name} has made</h1>
-          <div>
+          <h2 style={h3Style}>Posts you've made</h2>
+          <div class='card-columns'>
             {profile.posts.map((posts) => (
-              <PostItem key={posts._id} post={posts} />
+              <div class='card' style={{ width: "20rem" }}>
+                <PostItem key={posts._id} post={posts} />
+                <CommentForm postID={posts._id}></CommentForm>
+              </div>
             ))}
           </div>
         </Fragment>
@@ -50,7 +59,14 @@ const MyProfile = ({
     </Fragment>
   );
 };
-
+const titleStyle = {
+  color: "white",
+  textAlign: "center",
+};
+const h3Style = {
+  color: "black",
+  textAlign: "center",
+};
 MyProfile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
