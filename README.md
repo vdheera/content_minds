@@ -1,5 +1,5 @@
 # community_platform
-addicted to newsletters? me too! 
+addicted to newsletters and podcasts? me too! 
 
 tbis is a platform to create 'communities' with people who read the same newsletters as you! You can talk about anything within those communities and even see what other newsletter community members are reading! 
 
